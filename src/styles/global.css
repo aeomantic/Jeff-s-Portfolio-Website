@@ -1,0 +1,89 @@
+:root {
+  --font-display: 'Fredoka Variable', 'Fredoka', ui-rounded, 'SF Pro Rounded', 'Arial Rounded MT Bold',
+    system-ui, sans-serif;
+  --font-body: 'Nunito Variable', 'Nunito', ui-rounded, system-ui, -apple-system, 'Segoe UI', Roboto,
+    sans-serif;
+
+  /* rave */
+  --neon-pink: #ff4fd2;
+  --neon-violet: #a77bff;
+  --neon-cyan: #4fe3ff;
+  --rave-ink: #ffffff;
+  --rave-ink-soft: #e6dcff;
+  --rave-night: #0b0414;
+
+  /* coffee */
+  --cream: #fff6ea;
+  --latte-soft: #f3e3cf;
+  --mocha: #6b4a3a;
+  --espresso: #3d2418;
+  --espresso-btn: #6b4130;
+  --blush: #f7c1cc;
+  --rose-deep: #a8475f;
+
+  /* 1dvh where supported (tracks mobile browser toolbars), else 1vh */
+  --dvh: 1vh;
+}
+
+@supports (height: 1dvh) {
+  :root {
+    --dvh: 1dvh;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: var(--rave-night);
+  color: #fff;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.4s ease;
+}
+
+body[data-scene='coffee'] {
+  background: var(--cream);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+img {
+  max-width: 100%;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
