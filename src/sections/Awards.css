@@ -1,0 +1,116 @@
+.awards__intro {
+  align-items: end;
+  row-gap: 28px;
+  margin-bottom: clamp(48px, 6vw, 96px);
+}
+
+.awards__title {
+  grid-column: 1 / span 8;
+}
+
+.awards__note {
+  grid-column: 9 / -1;
+  max-width: 36ch;
+  color: var(--fg-muted);
+}
+
+.awards__list {
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.award {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  align-items: baseline;
+  padding: clamp(18px, 2.2vw, 30px) 0;
+  border-top: 1px solid var(--line-strong);
+  isolation: isolate;
+  transition: color 0.5s var(--ease-out);
+}
+
+/* Ink wipes up behind the row on hover: the one loud gesture on the page */
+.award::before {
+  content: '';
+  position: absolute;
+  inset: 0 calc(var(--gutter) * -0.5);
+  z-index: -1;
+  background: #111214;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.6s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .award:hover {
+    color: var(--ivory);
+  }
+
+  .award:hover::before {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .award:hover .award__by,
+  .award:hover .award__index {
+    color: var(--gold);
+  }
+}
+
+.award__year {
+  grid-column: 1 / span 2;
+  font-size: clamp(1.8rem, 2.6vw, 2.6rem);
+  line-height: 1;
+}
+
+.award__title {
+  grid-column: 3 / span 6;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.7vw, 2.8rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.award__by {
+  grid-column: 9 / span 3;
+  color: var(--fg-muted);
+  font-size: var(--fs-small);
+  transition: color 0.4s;
+}
+
+.award__index {
+  grid-column: 12;
+  text-align: right;
+  color: var(--fg-muted);
+  transition: color 0.4s;
+}
+
+.award:last-child .award__title {
+  font-style: italic;
+}
+
+@media (max-width: 1023px) {
+  .awards__title,
+  .awards__note {
+    grid-column: 1 / -1;
+  }
+
+  .award {
+    grid-template-columns: 5.2em minmax(0, 1fr);
+    row-gap: 6px;
+  }
+
+  .award__year {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    font-size: 1.6rem;
+  }
+
+  .award__title,
+  .award__by {
+    grid-column: 2;
+  }
+
+  .award__index {
+    display: none;
+  }
+}

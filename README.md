@@ -1,7 +1,11 @@
-# OIIA Cat Rave ☕
+# JEFF. — Executive, Scientist, Visionary, Astronaut, Cat
 
-A one-minute spinning-cat rave set to an OIIA psytrance remix, followed by a sudden,
-wholesome coffee break. Vite + React + TypeScript, no animation libraries.
+A single-page portfolio for Jeff: five doctorates, one orbital expedition, and an
+unscheduled demonstration of rotational excellence. Everything about Jeff's career is
+fictional. The site is a parody, and it says so in the footer.
+
+Vite + React 19 + TypeScript. No animation or UI libraries: motion is CSS, a shared
+IntersectionObserver, and two small canvas/SVG pieces.
 
 ## Run it
 
@@ -16,38 +20,47 @@ npm run preview    # serve the production build
 
 The build uses a relative base (`./`), so `dist/` works from any sub-path (e.g. GitHub Pages).
 
-## How it works
+## Structure
 
-| Piece | File | Notes |
-|---|---|---|
-| State machine | `src/state/experience.ts` | `ready → playing → transitioning → coffee`. Events that don't apply to the current phase are ignored, so late audio callbacks can't break the flow. |
-| Audio | `src/audio/RaveAudioEngine.ts` | One `<audio>` element. It's routed through an `AudioContext` + `AnalyserNode` only once the context is actually running, so the song never "plays" silently. Autoplay is attempted on load; if blocked, the **Tap to Start the Rave 🎵** button appears. |
-| Choreography | `src/rave/choreography.ts` | Pure TS. Reads `audio.currentTime` against a measured beat map (150 BPM, first beat 0.13 s, drops at 6.13 / 31.73 / 44.53 s) and blends in live bass/energy from the analyser. |
-| Particles | `src/rave/particles.ts` | One canvas: twinkles, beat sparks, paw prints, "OIIA" word pops, spectrum strip. Sprites are pre-rendered. |
-| Scenes | `src/components/` | `RaveScene`, `SpinningCat`, `TransitionOverlay`, `CoffeeScene`. Per-frame work writes `transform`/`opacity` directly; React never re-renders per frame. |
+| Path | What it holds |
+|---|---|
+| `src/content/site.ts` | All copy and data: hero, biography, roles, doctorates, projects, mission, awards, contact config, asset paths. |
+| `src/sections/` | One component + stylesheet per section: Hero, About, Experience, Education, Work, Space, Incident, Awards, Contact, Footer. |
+| `src/components/` | Header (with mobile menu and scroll progress), VideoPlayer, CoffeeDialog, DotGlobe (canvas), ProjectVisual (SVG diagrams), worldDots (dotted map generator), CountUp, Executive Mode toggle and Easter egg. |
+| `src/motion/` | `reveal.ts` (shared scroll-reveal observer) and the Executive Mode context. |
+| `src/styles/global.css` | Design tokens (colour, type scale, spacing, easing), grid, buttons, reveal system. |
 
-The intro ends on the audio element's real `ended` event. Timeouts only pace the
-wind-down → pop → coffee animation.
+## Design system
 
-**Reduced motion** (`prefers-reduced-motion: reduce`): no spinning, flashes, trails or
-particle bursts. The cat sways gently to the beat and the transition becomes a cross-fade.
-**Skip Intro** is always available.
+- **Palette:** near-black `#0d0e10`, warm ivory `#f4f1e9`, muted gold `#baa17c` (used sparingly),
+  and one signal red `#c8281e` taken from Jeff's tie, used only for small dots.
+- **Type:** Instrument Serif (display, credentials), Inter Tight (body), JetBrains Mono (metadata).
+- **Layout:** 12-column grid, editorial running heads above each section, alternating dark and ivory sections.
 
-**Debugging (dev only):** `window.__oiia.engine` and `window.__oiia.state` in the console.
-Stripped from production builds.
+## Behaviour notes
+
+- **Reveals** only hide content when `<html>` has `.js-reveal`, which is added when
+  IntersectionObserver exists *and* the visitor has not asked for reduced motion. Anything on
+  the first screen reveals immediately.
+- **Reduced motion:** no reveals, no globe rotation (one still frame), no muted video preview,
+  no orbit/diagram animation; counters show final values; the coffee ceremony is skipped.
+- **The Incident video** (`public/assets/the-incident.mp4`): one `<video>` element. A muted
+  preview loops only while on screen; sound starts only from the play button. Playback pauses
+  when scrolled away or when the tab is hidden. Custom controls: play/pause, replay, seek, mute,
+  fullscreen (with an iOS fallback). If the file fails to load, a fallback with a direct link appears.
+- **Executive Mode: Off** (in the Incident caption, footer and mobile menu) swaps the accents,
+  spins the portrait, changes the headline, and restores itself after 9 seconds.
+- **Contact:** no real address is configured. Set `CONTACT.email` in `src/content/site.ts` to
+  show a mailto link; otherwise the coffee interaction is the contact.
 
 ## Assets
 
 | File | Used for |
 |---|---|
-| `public/assets/spinning-cat.png` | Transparent cutout of the main cat (349×486) |
-| `public/assets/coffee-cat.png` | Coffee scene photo, shown in a framed card |
-| `public/assets/oiia-remix.mp3` | Soundtrack (60.3 s) |
-| `public/assets/spinning-reference.png` | Motion reference only, not used at runtime |
+| `public/assets/jeff-portrait.webp` / `.jpg` | Hero portrait (from `assets-src/jeff-portrait-original.png`) |
+| `public/assets/jeff-coffee.webp` / `.jpg` | Contact section and coffee dialog (from `assets-src/coffee-cat.png`) |
+| `public/assets/jeff-spinning.png` | Easter-egg cutout (from `assets-src/spinning-cat-original.png` via `scripts/make-cutout.py`) |
+| `public/assets/the-incident.mp4` | The Incident (1280×720 H.264/AAC, 60 s, faststart) |
+| `public/assets/the-incident-poster.jpg` | Video poster, a frame captured at 0:55 |
 
-The cutout is generated from `assets-src/spinning-cat-original.png` (flat `#DDDDDD`
-background) by `scripts/make-cutout.py` (needs Pillow, NumPy, SciPy):
-
-```bash
-python scripts/make-cutout.py assets-src/spinning-cat-original.png public/assets/spinning-cat.png <preview-dir>
-```
+`assets-src/` keeps originals and the previous site's audio; it is not shipped.

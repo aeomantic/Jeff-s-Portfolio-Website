@@ -1,0 +1,368 @@
+.space {
+  --fg-muted: #8f97a6;
+  --line: rgba(200, 215, 240, 0.14);
+  --line-strong: rgba(200, 215, 240, 0.3);
+  overflow: clip;
+  isolation: isolate;
+  padding-bottom: clamp(80px, 10vw, 160px);
+}
+
+/* Starfield: two parallax layers of tiny radial dots */
+.space__stars {
+  position: absolute;
+  inset: -20% 0;
+  z-index: -1;
+  pointer-events: none;
+  background-repeat: repeat;
+}
+
+.space__stars--far {
+  opacity: 0.55;
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, #fff, transparent 60%),
+    radial-gradient(1px 1px at 140px 80px, #dfe8ff, transparent 60%),
+    radial-gradient(1px 1px at 90px 170px, #fff, transparent 60%),
+    radial-gradient(1px 1px at 200px 220px, #c9d6ff, transparent 60%),
+    radial-gradient(1px 1px at 260px 40px, #fff, transparent 60%),
+    radial-gradient(1px 1px at 310px 150px, #fff, transparent 60%);
+  background-size: 340px 260px;
+  animation: twinkle 6s ease-in-out infinite alternate;
+}
+
+.space__stars--near {
+  opacity: 0.8;
+  background-image:
+    radial-gradient(1.5px 1.5px at 60px 120px, #fff, transparent 60%),
+    radial-gradient(1.5px 1.5px at 380px 60px, #f4f1e9, transparent 60%),
+    radial-gradient(2px 2px at 520px 340px, #fff, transparent 60%),
+    radial-gradient(1.5px 1.5px at 240px 420px, #dfe8ff, transparent 60%);
+  background-size: 640px 520px;
+}
+
+@keyframes twinkle {
+  to {
+    opacity: 0.3;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .space__stars--far {
+      animation:
+        twinkle 6s ease-in-out infinite alternate,
+        drift-far linear both;
+      animation-timeline: auto, view();
+    }
+
+    .space__stars--near {
+      animation: drift-near linear both;
+      animation-timeline: view();
+    }
+
+    .space__earth {
+      animation: earth-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 60%;
+    }
+  }
+}
+
+@keyframes drift-far {
+  from {
+    transform: translateY(-4%);
+  }
+  to {
+    transform: translateY(4%);
+  }
+}
+
+@keyframes drift-near {
+  from {
+    transform: translateY(-10%);
+  }
+  to {
+    transform: translateY(10%);
+  }
+}
+
+@keyframes earth-rise {
+  from {
+    transform: translateY(14%) scale(1.04);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.space__content {
+  position: relative;
+}
+
+.space__intro {
+  row-gap: 48px;
+}
+
+.space__heading {
+  grid-column: 1 / span 7;
+}
+
+.space__copy {
+  max-width: 44ch;
+  margin-top: clamp(28px, 3vw, 44px);
+  color: rgba(244, 241, 233, 0.76);
+  font-size: clamp(1.05rem, 1.2vw, 1.2rem);
+}
+
+.space__facts {
+  grid-column: 9 / -1;
+  align-self: end;
+  border-top: 1px solid var(--line-strong);
+}
+
+.space__facts > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.space__facts dt {
+  color: var(--fg-muted);
+}
+
+.space__facts dd {
+  text-align: right;
+}
+
+.space__designation {
+  flex-direction: column;
+  align-items: flex-start !important;
+}
+
+.space__designation dd {
+  font-size: clamp(1.6rem, 2.2vw, 2.2rem);
+  line-height: 1.05;
+  text-align: left;
+}
+
+/* Stage: Earth + altitude --------------------------------------------- */
+
+.space__stage {
+  position: relative;
+  margin-top: clamp(0px, 2vw, 32px);
+  min-height: clamp(460px, 52vw, 760px);
+  display: flex;
+  align-items: flex-end;
+}
+
+.space__earth {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 55%, transparent 100%);
+}
+
+.space__grid circle,
+.space__grid ellipse {
+  stroke: rgba(169, 204, 255, 0.07);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.space__orbit {
+  fill: none;
+  stroke: rgba(186, 161, 124, 0.55);
+  stroke-width: 1;
+  stroke-dasharray: 2 6;
+  vector-effect: non-scaling-stroke;
+}
+
+.space__altitude {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+  align-items: end;
+  padding-bottom: clamp(24px, 4vw, 56px);
+}
+
+.space__altitude-figure {
+  grid-column: 1 / span 7;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.space__altitude-number {
+  font-size: clamp(7rem, 22vw, 24rem);
+  line-height: 0.78;
+  letter-spacing: -0.05em;
+  color: transparent;
+  -webkit-text-stroke: 1.2px rgba(244, 241, 233, 0.85);
+}
+
+.space__altitude-unit {
+  margin-top: 1.2em;
+  font-size: clamp(0.8rem, 1.2vw, 1rem);
+  color: var(--gold);
+}
+
+.space__altitude-caption {
+  grid-column: 8 / span 5;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 2.5vw;
+}
+
+.space__altitude-caption .display {
+  font-size: clamp(2rem, 3.4vw, 3.6rem);
+  font-style: italic;
+  line-height: 1;
+}
+
+.space__altitude-caption .mono {
+  color: var(--fg-muted);
+}
+
+.space__statement {
+  grid-column: 1 / -1;
+  margin-top: clamp(28px, 4vw, 56px);
+  font-size: clamp(1.4rem, 2.2vw, 2.1rem);
+  line-height: 1.1;
+  color: rgba(244, 241, 233, 0.75);
+}
+
+/* Timeline -------------------------------------------------------------- */
+
+.space__timeline-wrap {
+  position: relative;
+  margin-top: clamp(64px, 8vw, 120px);
+}
+
+.space__timeline-title {
+  color: var(--fg-muted);
+  margin-bottom: 28px;
+}
+
+.space__timeline-box {
+  position: relative;
+}
+
+.space__timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--col-gap);
+  padding-top: 28px;
+}
+
+.space__timeline-track {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold), rgba(186, 161, 124, 0.2));
+}
+
+.space__timeline li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.space__node {
+  position: absolute;
+  top: -28px;
+  left: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--night);
+  border: 1px solid var(--gold);
+}
+
+.space__timeline li:nth-child(3) .space__node {
+  background: var(--gold);
+}
+
+.space__mark {
+  color: var(--gold);
+}
+
+.space__event {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 1.8vw, 1.85rem);
+  line-height: 1.05;
+}
+
+.space__note {
+  color: var(--fg-muted);
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  max-width: 28ch;
+}
+
+@media (max-width: 1023px) {
+  .space__heading,
+  .space__facts {
+    grid-column: 1 / -1;
+  }
+
+  .space__altitude {
+    grid-template-columns: 1fr;
+  }
+
+  .space__altitude-figure,
+  .space__altitude-caption,
+  .space__statement {
+    grid-column: 1;
+  }
+
+  .space__altitude-caption {
+    padding-bottom: 0;
+  }
+
+  .space__timeline {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-top: 0;
+    padding-left: 32px;
+  }
+
+  .space__timeline-track {
+    top: 0;
+    bottom: 0;
+    left: 4px;
+    right: auto;
+    width: 1px;
+    height: auto;
+    background: linear-gradient(180deg, var(--gold), rgba(186, 161, 124, 0.2));
+    transform-origin: top center;
+  }
+
+  .js-reveal .space__timeline-track[data-reveal='rule'] {
+    transform: scaleY(0);
+  }
+
+  .js-reveal .space__timeline-track[data-reveal='rule'][data-in] {
+    transform: none;
+  }
+
+  .space__node {
+    top: 6px;
+    left: -32px;
+  }
+}
+
+@media (max-width: 599px) {
+  .space__stage {
+    min-height: 420px;
+  }
+}

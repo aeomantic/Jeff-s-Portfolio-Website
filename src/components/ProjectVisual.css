@@ -1,0 +1,183 @@
+.pv {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  color: var(--ivory);
+}
+
+.pv-line,
+.pv-faint,
+.pv-line-gold {
+  fill: none;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.pv-line {
+  stroke: rgba(244, 241, 233, 0.55);
+}
+
+.pv-faint {
+  stroke: rgba(244, 241, 233, 0.16);
+}
+
+.pv-line-gold {
+  stroke: var(--gold);
+  stroke-width: 1.6;
+}
+
+.pv-dot {
+  fill: var(--ivory);
+}
+
+.pv-dot-gold {
+  fill: var(--gold);
+}
+
+.pv-fill-gold {
+  fill: var(--gold);
+}
+
+.pv-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  fill: rgba(244, 241, 233, 0.5);
+}
+
+.pv-label--sm {
+  font-size: 9px;
+}
+
+/* Sentience */
+.pv-node {
+  fill: var(--ink);
+  stroke: rgba(244, 241, 233, 0.7);
+  stroke-width: 1;
+  animation: node-blink 3.2s ease-in-out infinite;
+}
+
+.pv-node--decision {
+  fill: var(--gold);
+  stroke: var(--gold);
+}
+
+@keyframes node-blink {
+  50% {
+    stroke: var(--gold);
+  }
+}
+
+/* Prometheus */
+.pv-rotate-slow,
+.pv-rotate-rev {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+  animation: spin 60s linear infinite;
+}
+
+.pv-rotate-rev {
+  animation-duration: 30s;
+  animation-direction: reverse;
+}
+
+.pv-rod {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  animation: rod 2.4s ease-in-out infinite;
+}
+
+@keyframes rod {
+  50% {
+    fill: color-mix(in srgb, var(--gold) 40%, transparent);
+  }
+}
+
+.pv-core-glow {
+  fill: var(--gold);
+  opacity: 0.14;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: glow 3.6s ease-in-out infinite;
+}
+
+@keyframes glow {
+  50% {
+    opacity: 0.3;
+    transform: scale(1.25);
+  }
+}
+
+/* Equilibrium */
+.pv-draw {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  animation: draw 3.2s var(--ease-in-out) forwards;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.pv-wave {
+  stroke-dasharray: 6 6;
+  animation: wave 1.6s linear infinite;
+}
+
+@keyframes wave {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+/* Existence */
+.pv-door {
+  transform-box: view-box;
+  transform-origin: 130px 200px;
+  animation: door 7s var(--ease-in-out) infinite;
+}
+
+.pv-door-panel {
+  fill: var(--ink-2);
+  stroke: rgba(244, 241, 233, 0.7);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.pv-light {
+  fill: var(--gold);
+  opacity: 0.16;
+  animation: light 7s var(--ease-in-out) infinite;
+}
+
+@keyframes door {
+  0%,
+  100% {
+    transform: scaleX(1);
+  }
+  45%,
+  60% {
+    transform: scaleX(0.78);
+  }
+}
+
+@keyframes light {
+  0%,
+  100% {
+    opacity: 0.12;
+  }
+  45%,
+  60% {
+    opacity: 0.26;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

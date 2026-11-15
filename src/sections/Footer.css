@@ -1,0 +1,137 @@
+.footer {
+  position: relative;
+  padding-top: clamp(80px, 10vw, 150px);
+  padding-bottom: calc(28px + env(safe-area-inset-bottom));
+  background: var(--ink);
+  border-top: 1px solid rgba(244, 241, 233, 0.08);
+  overflow: clip;
+}
+
+.footer__top {
+  row-gap: 48px;
+}
+
+.footer__tagline {
+  grid-column: 1 / span 6;
+  font-size: clamp(2.2rem, 4.2vw, 4.4rem);
+  line-height: 0.98;
+}
+
+.footer__nav {
+  grid-column: 8 / span 2;
+}
+
+.footer__colophon {
+  grid-column: 10 / -1;
+}
+
+.footer__nav h2,
+.footer__colophon h2 {
+  margin-bottom: 16px;
+}
+
+.footer__nav a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 5px 0;
+  text-decoration: none;
+  color: rgba(244, 241, 233, 0.8);
+  transition: color 0.3s, transform 0.4s var(--ease-out);
+}
+
+.footer__nav a .mono {
+  color: var(--gold);
+  font-size: 0.6rem;
+}
+
+.footer__nav a:hover,
+.footer__nav a:focus-visible {
+  color: var(--ivory);
+  transform: translateX(6px);
+}
+
+.footer__colophon p {
+  color: var(--fg-muted);
+  font-size: var(--fs-small);
+  max-width: 30ch;
+  margin-bottom: 14px;
+}
+
+.footer__wordmark {
+  margin-top: clamp(64px, 8vw, 120px);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(7rem, 44vw, 46rem);
+  line-height: 0.74;
+  letter-spacing: -0.05em;
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.footer__wordmark-inner {
+  display: block;
+}
+
+.footer__wordmark .line-mask {
+  padding-bottom: 0.06em;
+}
+
+.footer__dot {
+  color: var(--signal);
+  transition: color 0.4s;
+}
+
+.footer__bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 3fr) auto;
+  align-items: end;
+  gap: 20px var(--col-gap);
+  margin-top: clamp(32px, 4vw, 56px);
+  padding-top: 20px;
+  border-top: 1px solid rgba(244, 241, 233, 0.12);
+}
+
+.footer__disclaimer {
+  max-width: 72ch;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #a6a6ab;
+}
+
+.footer__disclaimer strong {
+  color: var(--ivory);
+  font-weight: 600;
+}
+
+.footer__copyright {
+  text-transform: none;
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 1023px) {
+  .footer__tagline {
+    grid-column: 1 / -1;
+  }
+
+  .footer__nav {
+    grid-column: 1 / span 3;
+  }
+
+  .footer__colophon {
+    grid-column: 4 / -1;
+  }
+
+  .footer__bottom {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+}
+
+@media (max-width: 599px) {
+  .footer__nav,
+  .footer__colophon {
+    grid-column: 1 / -1;
+  }
+}

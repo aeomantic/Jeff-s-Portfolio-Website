@@ -1,0 +1,110 @@
+.egg__toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: min(520px, calc(100vw - 24px));
+  padding: 12px 14px 12px 12px;
+  background: rgba(13, 14, 16, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--ivory);
+  border: 1px solid color-mix(in srgb, var(--gold) 60%, transparent);
+  border-radius: 999px;
+  translate: -50% 0;
+  animation: egg-in 0.7s var(--ease-out);
+}
+
+@keyframes egg-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+.egg__cat {
+  flex: none;
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  animation: egg-spin 0.5s linear infinite;
+}
+
+@keyframes egg-spin {
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+.egg__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.egg__eyebrow {
+  color: var(--gold);
+}
+
+.egg__message {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  line-height: 1.1;
+}
+
+.egg__timer {
+  display: block;
+  height: 1px;
+  margin-top: 8px;
+  background: var(--gold);
+  transform-origin: left center;
+  animation: egg-timer 9s linear forwards;
+}
+
+@keyframes egg-timer {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+.egg__restore {
+  flex: none;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid rgba(244, 241, 233, 0.3);
+  border-radius: 999px;
+  background: transparent;
+  transition: background 0.3s, color 0.3s;
+}
+
+.egg__restore:hover,
+.egg__restore:focus-visible {
+  background: var(--ivory);
+  color: var(--ink);
+}
+
+/* A little controlled chaos across the page while the egg runs */
+:root[data-exec='off'] .wordmark__dot,
+:root[data-exec='off'] .footer__dot {
+  color: var(--gold);
+}
+
+:root[data-exec='off'] .hero__badge-ring {
+  animation-duration: 2s;
+}
+
+@media (max-width: 479px) {
+  .egg__toast {
+    border-radius: 20px;
+    flex-wrap: wrap;
+  }
+
+  .egg__restore {
+    width: 100%;
+  }
+}
